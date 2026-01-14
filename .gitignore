@@ -1,0 +1,7 @@
+# ignore everything except
+!.gitignore
+!src/
+!test/
+!uv.lock
+!pyproject.toml
+!README.md

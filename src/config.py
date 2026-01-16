@@ -1,18 +1,29 @@
-import logging
-import ecs_logging
-from colorlog import ColoredFormatter
-
-from venue_rec.utils import parse_config_files
-
-# TODO: use enum
-DEFAULT_VECTORSTORE_TYPE = "opensearch"
+def default_configs() -> dict:
+    return {
+        "environment": "local",
+        "server": {
+            "host": "0.0.0.0",
+            "port": 8000,
+        },
+        "opensearch": {
+            "url": "http://localhost:9200",
+            "index_name": "venue_event_history",
+        },
+        "llm_config": {
+            "model": "gpt-4o-mini",
+        },
+        "logger": {
+            "level": "INFO",
+            "enable_structured_logging": True,
+            "service_name": "venue-recommendation-service",
+        },
+    }
 
 
 class Configuration:
-    def __init__(self):
-        configs = parse_config_files()
+    def __init__(self, configs: dict):
         self.server = Server(configs["server"])
-
+        self.environment = configs["environment"]
         self.opensearch = OpenSearch(configs["opensearch"])
         self.llm_config = LLMConfig(configs["llm_config"])
         self.logger = LoggerConfig(configs["logger"])
@@ -22,6 +33,9 @@ class Server:
     def __init__(self, configs: dict):
         self.host = configs["host"]
         self.port = configs["port"]
+
+    def get_server_url(self) -> str:
+        return f"http://{self.host}:{self.port}"
 
 
 class OpenSearch:
@@ -33,11 +47,9 @@ class OpenSearch:
 class LLMConfig:
     def __init__(self, configs: dict):
         self.url = configs["url"]
-        self.azure_endpoint = configs["azure_endpoint"]
-        self.azure_deployments_endpoint = configs["azure_deployments_endpoint"]
-        self.azure_api_version = configs["azure_api_version"]
         self.openai_endpoint = configs["openai_endpoint"]
-        self.identity_name = configs["identity_name"]
+        self.openai_api_version = configs["openai_api_version"]
+        self.model = configs["model"]
 
 
 class LoggerConfig:
@@ -46,6 +58,7 @@ class LoggerConfig:
         self.enable_structured_logging = configs.get(
             "enable_structured_logging", "True"
         )
+        self.service_name = configs["service_name"]
 
 
-config = Configuration()
+config = Configuration(default_configs())

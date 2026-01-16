@@ -6,12 +6,8 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 HTTPErrorType = Enum(
     "HTTPErrorType",
     [
-        "InternalError",
-        "ServiceUnavailable",
         "UnprocessableEntityError",
-        "UnsupportedMediaTypeError",
-        "UnsupportedFileTypeError",
-        "UnkownError",
+        "HTTPError",
     ],
 )
 
@@ -30,45 +26,6 @@ class HTTPError(StarletteHTTPException):
 
     def getExtentionAttributes(self) -> dict:
         return {}
-
-
-class InternalHTTPError(HTTPError):
-    def __init__(
-        self,
-        detail: str,
-    ) -> None:
-        super().__init__(
-            status_code=HTTPStatus.INTERNAL_SERVER_ERROR,
-            title=HTTPStatus.INTERNAL_SERVER_ERROR.phrase,
-            error_type=HTTPErrorType.InternalError,
-            detail=detail,
-        )
-
-
-class ServiceUnavailableHTTPError(HTTPError):
-    def __init__(
-        self,
-        detail: str,
-    ) -> None:
-        super().__init__(
-            status_code=HTTPStatus.SERVICE_UNAVAILABLE,
-            title=HTTPStatus.SERVICE_UNAVAILABLE.phrase,
-            error_type=HTTPErrorType.ServiceUnavailable,
-            detail=detail,
-        )
-
-
-class UnsupportedFileTypeHTTPError(HTTPError):
-    def __init__(
-        self,
-        detail: str,
-    ) -> None:
-        super().__init__(
-            status_code=HTTPStatus.UNSUPPORTED_MEDIA_TYPE,
-            title=HTTPStatus.UNSUPPORTED_MEDIA_TYPE.phrase,
-            error_type=HTTPErrorType.UnsupportedFileTypeError,
-            detail=detail,
-        )
 
 
 class UnprocessableEntityHTTPError(HTTPError):

@@ -2,11 +2,9 @@ SHELL = /usr/bin/env bash
 
 install-python:
 	uv python install 3.12.6
-	uv venv
-	source .venv/bin/activate
-	uv sync
 
-activate-venv:
+create-venv:
+	uv venv --python 3.12.6
 	source .venv/bin/activate
 
 install-dependencies:

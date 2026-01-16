@@ -41,8 +41,8 @@ The Event Venue Recommendation System is a multi-agent AI system designed to mat
 
 - Python 3.12+
 - Docker and Docker Compose (for OpenSearch)
-- OpenAI API key (for embeddings)
-- `uv` package manager (or pip)
+- OpenAI API key (for embeddings and text generation)
+- `uv` package manager
 
 ### Setup and Run
 
@@ -51,14 +51,28 @@ Use `make` commands. Make sure you have `uv` installed, if not run `curl -LsSf h
 - To run the server
 
 ```bash
+# if python 3.12.x is not available
+make isntall-python
+# create venv
+make create-venv
 # install dependencies, start opensearch locally, create the index and run server
 make run 
-
 # index local document
 make index-documents
 ```
-The API will be available at `http://localhost:8000` and the api docs at `http://localhost:8000/api/docs`
 
+Make a recommendation request
+
+```
+curl -X 'POST' \
+  'http://0.0.0.0:8000/api/v1/venues/recommend' \
+  -d '{
+  "event_id": "EVT-2026-028",
+  "top_n": 3
+}'
+```
+
+The API will be available at `http://localhost:8000` and the api docs at `http://localhost:8000/api/docs`
 
 - Execute `/index` endpoint to index `event_history.json` file
 - Execute `/recommend` endpoint to get top-n recommendations for the venue

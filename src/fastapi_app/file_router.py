@@ -1,7 +1,6 @@
 import json
 import logging
 from fastapi import APIRouter, Depends, status
-from fastapi.responses import JSONResponse
 from src.orchestrator import VenueRecommendationOrchestrator
 from src.datamodel.api import (
     IndexDocumentsRequest,
@@ -48,17 +47,18 @@ async def get_venue_recommendations(
 
 @file_router.post(
     "/index",
-    status_code=200,
+    status_code=status.HTTP_201_CREATED,
     response_model=IndexDocumentsResponse,
 )
 async def index_documents(
     request: IndexDocumentsRequest,
-) -> dict:
+) -> IndexDocumentsResponse:
     logger.debug("Index documents")
     vector_engine = OpenSearchEngine()
     success, total_documents = await vector_engine.index_documents(
         request.event_history_path,
     )
-    return JSONResponse(
-        content={"success": success, "total_documents": total_documents}
+    return IndexDocumentsResponse(
+        success=success,
+        total_documents=total_documents,
     )

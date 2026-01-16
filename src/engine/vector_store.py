@@ -10,7 +10,7 @@ from langchain_community.vectorstores.opensearch_vector_search import OpenSearch
 from langchain_core.documents import Document
 from langchain_openai import OpenAIEmbeddings
 
-
+#TODO: add cache backed embeddings
 # from langchain.embeddings import CacheBackedEmbeddings
 # from langchain.storage import LocalFileStore
 
@@ -30,7 +30,6 @@ def create_event_embedding_text(event: Dict[str, Any]) -> str:
     Create composite text for embedding that captures event-venue match pattern.
     This text will be vectorized for semantic similarity search.
     """
-    # Extract arrays as comma-separated strings
     key_requirements = ", ".join(event.get("key_requirements", []))
     success_factors = ", ".join(event.get("success_factors", []))
     challenges = ", ".join(event.get("challenges", []))
@@ -104,7 +103,6 @@ def get_event_metadata(event: Dict[str, Any]) -> Dict[str, Any]:
         "indexed_at": datetime.now().isoformat(),
     }
 
-    # Remove None values to avoid indexing issues
     return {k: v for k, v in event_metadata.items() if v is not None}
 
 
@@ -123,7 +121,6 @@ class OpenSearchEngine:
 
     def get_embedding_client(self):
 
-        # _embedding_client = MockEmbeddings()
         _embedding_client = OpenAIEmbeddings(
             model="text-embedding-3-small",
             openai_api_key=os.getenv("OPENAI_API_KEY"),

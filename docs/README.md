@@ -1,17 +1,17 @@
 # Event Venue Recommendation System
 
+
 ## Table of Contents
 
 - [Event Venue Recommendation System](#event-venue-recommendation-system)
   - [Table of Contents](#table-of-contents)
   - [Overview](#overview)
-  - [Goals](#goals)
-  - [Architecture](#architecture)
-    - [Core Components](#core-components)
-    - [System Flow](#system-flow)
   - [Quick Start](#quick-start)
     - [Prerequisites](#prerequisites)
     - [Setup and Run](#setup-and-run)
+  - [Architecture](#architecture)
+    - [Core Components](#core-components)
+    - [System Flow](#system-flow)
   - [API Endpoints](#api-endpoints)
     - [1. Get Venue Recommendations](#1-get-venue-recommendations)
     - [2. Index Documents](#2-index-documents)
@@ -34,14 +34,35 @@
 
 The Event Venue Recommendation System is a multi-agent AI system designed to match corporate event requirements. The system leverages Retrieval Augmented Generation (RAG) to find similar successful event-venue pairings from historical data and uses specialized AI agents to analyze different matching criteria.
 
-## Goals
 
-The goal of this system is to:
+## Quick Start
 
-- **Match client requirements** with optimal venues considering capacity, amenities, location, cost, and historical performance
-- **Provide personalized recommendations** with detailed reasoning and analysis
-- **Learn from past events** using RAG to retrieve similar successful event-venue matches
-- **Scale efficiently** through parallel agent execution and robust error handling
+### Prerequisites
+
+- Python 3.12+
+- Docker and Docker Compose (for OpenSearch)
+- OpenAI API key (for embeddings)
+- `uv` package manager (or pip)
+
+### Setup and Run
+
+Use `make` commands. Make sure you have `uv` installed, if not run `curl -LsSf https://astral.sh/uv/install.sh | sh`. Make sure to add OPENAI_API_KEY in `.env` file or `export OPENAI_API_KEY=<your api key>`.
+
+- To run the server
+
+```bash
+# install dependencies, start opensearch locally, create the index and run server
+make run 
+
+# index local document
+make index-documents
+```
+The API will be available at `http://localhost:8000` and the api docs at `http://localhost:8000/api/docs`
+
+
+- Execute `/index` endpoint to index `event_history.json` file
+- Execute `/recommend` endpoint to get top-n recommendations for the venue
+
 
 ## Architecture
 
@@ -83,34 +104,6 @@ EventID → RAG Retriever → [4 Parallel Agents] → Supervisor → Recommendat
 
 For a detailed system flow diagram, see [workflow.md](./workflow.md#system-flow).
 
-## Quick Start
-
-### Prerequisites
-
-- Python 3.12+
-- Docker and Docker Compose (for OpenSearch)
-- OpenAI API key (for embeddings)
-- `uv` package manager (or pip)
-
-### Setup and Run
-
-Use `make` commands. Make sure you have `uv` installed, if not run `curl -LsSf https://astral.sh/uv/install.sh | sh`
-
-- To run the server
-
-```bash
-# install dependencies, start opensearch locally, create the index and run server
-make run 
-
-# index local document
-make index-documents
-```
-The API will be available at `http://localhost:8000` and the api docs at `http://localhost:8000/api/docs`
-
-
-- Execute `/index` endpoint to index `event_history.json` file
-- Execute `/recommend` endpoint to get top-n recommendations for the venue
-
 ## API Endpoints
 
 ### 1. Get Venue Recommendations
@@ -121,7 +114,7 @@ The API will be available at `http://localhost:8000` and the api docs at `http:/
 
 ```json
 {
-  "event_id": "EVT-2026-089",
+  "event_id": "EVT-2026-028",
   "top_n": 3
 }
 ```
@@ -245,6 +238,8 @@ event_venue_rec/
 ## Development
 
 ### Running Tests
+
+This is a TODO
 
 ```bash
 # Add test commands here when tests are implemented

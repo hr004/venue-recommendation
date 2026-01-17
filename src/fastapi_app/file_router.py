@@ -13,6 +13,7 @@ from src.fastapi_app.http_exception import UnprocessableEntityHTTPError
 
 logger = logging.getLogger(__name__)
 
+
 def get_current_requests_db():
     current_requests_db = json.load(open("data/venue/current_requests.json"))
     return {event["event_id"]: event for event in current_requests_db}
@@ -34,7 +35,10 @@ async def get_venue_recommendations(
 ) -> VenueRecommendationResponse:
     logger.debug("Search nearest venue recommendations")
     if request.event_id not in current_requests_db:
-        raise UnprocessableEntityHTTPError(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Event not found")
+        raise UnprocessableEntityHTTPError(
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+            detail="Event not in current requests database",
+        )
     event = current_requests_db[request.event_id]
     vector_engine = OpenSearchEngine()
     retrieved_documents = await vector_engine.search_documents(event)

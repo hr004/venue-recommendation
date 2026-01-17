@@ -240,7 +240,7 @@ event_venue_rec/
 This is a TODO
 
 ```bash
-# Add test commands here when tests are implemented
+pytest tests
 ```
 
 ### Debugging

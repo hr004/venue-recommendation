@@ -12,32 +12,33 @@ logger = logging.getLogger(__name__)
 
 load_dotenv()
 
+
 def setup_logging():
     """Configure logging for the application."""
     log_level = getattr(logging, config.logger.level.upper(), logging.INFO)
-    
+
     # Configure root logger
     logging.basicConfig(
         level=log_level,
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-        handlers=[
-            logging.StreamHandler(sys.stdout)
-        ],
-        force=True  # Override any existing configuration
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        handlers=[logging.StreamHandler(sys.stdout)],
+        force=True,  # Override any existing configuration
     )
-    
+
     # Set log level for uvicorn
     logging.getLogger("uvicorn").setLevel(log_level)
     logging.getLogger("uvicorn.access").setLevel(log_level)
     logging.getLogger("uvicorn.error").setLevel(log_level)
-    
+
     # Set log level for application loggers
     logging.getLogger("src").setLevel(log_level)
-    
+
     logger.info(f"Logging configured at {config.logger.level} level")
+
 
 # Initialize logging before creating the app
 setup_logging()
+
 
 def create_app() -> FastAPI:
     app = FastAPI(
@@ -56,8 +57,8 @@ def create_app() -> FastAPI:
 def serve():
     app = create_app()
     uvicorn.run(
-        app, 
-        host=config.server.host, 
+        app,
+        host=config.server.host,
         port=config.server.port,
         log_level=config.logger.level.lower(),  # Pass log level to uvicorn
         access_log=True,  # Enable access logs

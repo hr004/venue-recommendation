@@ -1,7 +1,7 @@
 [project]
 name = "event-venue-rec"
 version = "0.1.0"
-description = "Add your description here"
+description = "Event venue recommendation system"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
@@ -13,10 +13,22 @@ dependencies = [
     "langchain-openai>=1.1.7",
     "langchain>=1.2.3",
     "opensearch-py>=3.1.0",
+    "pytest>=9.0.2",
+    "pytest-asyncio>=0.24.0",
+    "pytest-cov>=6.0.0",
     "python-dotenv>=1.2.1",
     "pyyaml>=6.0.3",
     "uvicorn>=0.40.0",
 ]
 
-[tool.poe]
-envfile = ".env"
+[tool.pytest.ini_options]
+testpaths = "tests"
+console_output_style = "progress"
+addopts = """
+          --cov=src \
+          --no-cov-on-fail \
+          --cov-report term-missing -v \
+          --cov-fail-under=50 \
+          """
+asyncio_mode = "auto"
+env = ["OPENAI_API_KEY = test"]

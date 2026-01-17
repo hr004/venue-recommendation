@@ -4,11 +4,11 @@ from typing import Any, Dict, List, Optional, Tuple
 from langchain_core.documents import Document
 from src.consts import AgentStatus
 from src.agents import (
-    AmenityMatchingAgent, 
+    AmenityMatchingAgent,
     CapacitySpaceAgent,
     CostAnalysisAgent,
     LocationAgent,
-    VenueRecommendationAgent
+    VenueRecommendationAgent,
 )
 
 logger = logging.getLogger(__name__)

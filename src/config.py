@@ -46,9 +46,6 @@ class OpenSearch:
 
 class LLMConfig:
     def __init__(self, configs: dict):
-        self.url = configs["url"]
-        self.openai_endpoint = configs["openai_endpoint"]
-        self.openai_api_version = configs["openai_api_version"]
         self.model = configs["model"]
 
 

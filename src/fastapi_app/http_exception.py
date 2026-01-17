@@ -32,6 +32,7 @@ class UnprocessableEntityHTTPError(HTTPError):
     def __init__(
         self,
         detail: str,
+        status_code: int = None,
         errors: dict = {},
     ) -> None:
         super().__init__(

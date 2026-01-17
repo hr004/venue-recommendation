@@ -6,11 +6,13 @@ from datetime import datetime
 from typing import Any, Dict
 from src.config import config
 from src.utils import read_json
-from langchain_community.vectorstores.opensearch_vector_search import OpenSearchVectorSearch
+from langchain_community.vectorstores.opensearch_vector_search import (
+    OpenSearchVectorSearch,
+)
 from langchain_core.documents import Document
 from langchain_openai import OpenAIEmbeddings
 
-#TODO: add cache backed embeddings
+# TODO: add cache backed embeddings
 # from langchain.embeddings import CacheBackedEmbeddings
 # from langchain.storage import LocalFileStore
 
@@ -212,8 +214,6 @@ class OpenSearchEngine:
             logging.error(f"Error searching documents: {e}")
             retrieved_documents = []
         return retrieved_documents
-
-
 
     async def index_documents(self, event_history_path: str):
         documents = []

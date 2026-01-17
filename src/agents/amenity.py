@@ -231,4 +231,3 @@ class AmenityMatchingAgent(BaseAgent):
         )
         logger.info(f"Amenity analysis result: {result.model_dump_json(indent=2)}")
         return result
-

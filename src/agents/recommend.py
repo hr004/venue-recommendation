@@ -13,11 +13,21 @@ logger = logging.getLogger(__name__)
 
 
 class _Analysis(BaseModel):
-    capacity_agent: str = Field(..., description="Detailed analysis of the venue capacity")
-    amenity_agent: str = Field(..., description="Detailed analysis of the venue amenity")
-    location_agent: str = Field(..., description="Detailed analysis of the venue location")
-    cost_agent: str = Field(..., description="Detailed analysis of the venue cost with breakdown")
-    similar_events: str = Field(..., description="Detailed analysis of the similar events for the venue")
+    capacity_agent: str = Field(
+        ..., description="Detailed analysis of the venue capacity"
+    )
+    amenity_agent: str = Field(
+        ..., description="Detailed analysis of the venue amenity"
+    )
+    location_agent: str = Field(
+        ..., description="Detailed analysis of the venue location"
+    )
+    cost_agent: str = Field(
+        ..., description="Detailed analysis of the venue cost with breakdown"
+    )
+    similar_events: str = Field(
+        ..., description="Detailed analysis of the similar events for the venue"
+    )
 
 
 class _VenueRecommendation(BaseModel):
@@ -178,7 +188,9 @@ class VenueRecommendationAgent(BaseAgent):
                 }
             )
             self.agent_status = AgentStatus.SUCCESS
-            logger.info(f"Venue recommendation result: {result.model_dump_json(indent=2)}")
+            logger.info(
+                f"Venue recommendation result: {result.model_dump_json(indent=2)}"
+            )
             return result
         except Exception as e:
             logger.error(f"Error recommending venues: {e}", exc_info=e)

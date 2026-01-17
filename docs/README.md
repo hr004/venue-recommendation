@@ -18,8 +18,6 @@
   - [Configuration](#configuration)
   - [Key Features](#key-features)
     - [1. RAG Implementation](#1-rag-implementation)
-    - [2. Multi-Agent System](#2-multi-agent-system)
-    - [3. Robust Orchestration](#3-robust-orchestration)
   - [Documentation](#documentation)
   - [Project Structure](#project-structure)
   - [Development](#development)
@@ -199,24 +197,10 @@ Environment variables can be loaded from `.env` file using `python-dotenv`.
 - **Filtering**: Filters by attendee count (±20% tolerance) and location cities (keyword prefix search)
 - **Metadata Enrichment**: Merges client profiles and venue details into document metadata
 
-### 2. Multi-Agent System
-
-- **Parallel Execution**: All four agents run concurrently using `asyncio.gather()`
-- **Error Handling**: Failed agents are automatically retried up to 3 times
-- **Graceful Degradation**: System continues processing even if individual agents fail
-- **Structured Output**: All agents use Pydantic models for type-safe outputs
-
-### 3. Robust Orchestration
-
-- **Result Aggregation**: Collects successful agent results into a unified recommendations dictionary
-- **Supervisor Synthesis**: Final agent synthesizes all analyses and ranks venues
-- **Priority Weighting**: Prioritizes capacity and location analysis in final recommendations
 
 ## Documentation
 
-- **[Workflow Documentation](./workflow.md)**: Detailed explanation of indexing, searching, and agent orchestration
-- **[Main README](../README.md)**: Project requirements and evaluation criteria
-- **[Design Documentation](./design.md)**: System design and architecture decisions (if available)
+- **[Workflow Documentation](./docs/workflow.md)**: Detailed explanation of indexing, searching, and agent orchestration
 
 ## Project Structure
 

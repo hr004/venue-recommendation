@@ -237,8 +237,6 @@ event_venue_rec/
 
 ### Running Tests
 
-This is a TODO
-
 ```bash
 pytest tests
 ```

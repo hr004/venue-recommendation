@@ -200,7 +200,7 @@ Environment variables can be loaded from `.env` file using `python-dotenv`.
 
 ## Documentation
 
-- **[Workflow Documentation](./docs/workflow.md)**: Detailed explanation of indexing, searching, and agent orchestration
+- **[Workflow Documentation](./workflow.md)**: Detailed explanation of indexing, searching, and agent orchestration
 
 ## Project Structure
 

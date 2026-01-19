@@ -247,37 +247,3 @@ class CapacitySpaceAgent(BaseAgent):
         logger.info(f"Capacity analysis result: {result.model_dump_json(indent=2)}")
         return result
 
-
-if __name__ == "__main__":
-    import asyncio
-
-    capacity_agent = CapacitySpaceAgent()
-    event = {
-        "event_id": "EVENT_123",
-        "attendee_count": 100,
-        "duration_days": 1,
-        "event_type": "conference",
-    }
-    venues = [
-        {
-            "venue_id": "VENUE_123",
-            "max_capacity": 100,
-            "min_capacity": 50,
-            "meeting_rooms": 10,
-            "total_sqft": 10000,
-            "largest_room_sqft": 1000,
-            "ballroom_capacity": 100,
-        }
-    ]
-    retrieved_documents = [
-        Document(
-            page_content="Similar Event 1: Event Type: conference, Attendee Count: 100, Venue: Venue 1, Venue Capacity: 100, Outcome: Success, Rating: 5"
-        ),
-        Document(
-            page_content="Similar Event 2: Event Type: conference, Attendee Count: 100, Venue: Venue 2, Venue Capacity: 100, Outcome: Success, Rating: 5"
-        ),
-    ]
-    capacity_analysis = asyncio.run(
-        capacity_agent.run(event, venues, retrieved_documents)
-    )
-    print(capacity_analysis.capacity_analysis)
